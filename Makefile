@@ -42,7 +42,7 @@ docker-run-windows:
 	docker run --rm $(REGISTRY)/$(REPOSITORY)/$(IMAGE_TAG):windows
 
 clean:
-	docker rmi $(REGISTRY)/$(REPOSITORY)/$(IMAGE_TAG):linux \
+	-docker rmi $(REGISTRY)/$(REPOSITORY)/$(IMAGE_TAG):linux \
 		$(REGISTRY)/$(REPOSITORY)/$(IMAGE_TAG):arm \
 		$(REGISTRY)/$(REPOSITORY)/$(IMAGE_TAG):macos \
-		$(REGISTRY)/$(REPOSITORY)/$(IMAGE_TAG):windows
+		$(REGISTRY)/$(REPOSITORY)/$(IMAGE_TAG):windows || true
