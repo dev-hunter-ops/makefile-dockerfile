@@ -13,7 +13,7 @@ ARG TARGETARCH
 RUN GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o /app/bin/myapp main.go
 
 # Create a smaller image with only the binary
-FROM quay.io/projectquay/alpine:3.15
+FROM alpine:3.15
 
 WORKDIR /app
 
