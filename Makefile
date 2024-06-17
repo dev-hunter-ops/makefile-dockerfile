@@ -4,28 +4,30 @@ DOCKER_REGISTRY=quay.io/your_registry
 
 # Platform specific build targets
 linux:
-	GOOS=linux GOARCH=amd64 go build -o bin/myapp-linux main.go
+	docker build --build-arg TARGETOS=linux --build-arg TARGETARCH=amd64 -t $(DOCKER_REGISTRY)/$(IMAGE_NAME)-linux .
 
 arm:
-	GOOS=linux GOARCH=arm64 go build -o bin/myapp-arm main.go
+	docker build --build-arg TARGETOS=linux --build-arg TARGETARCH=arm64 -t $(DOCKER_REGISTRY)/$(IMAGE_NAME)-arm .
 
 macos:
-	GOOS=darwin GOARCH=amd64 go build -o bin/myapp-macos main.go
+	docker build --build-arg TARGETOS=darwin --build-arg TARGETARCH=amd64 -t $(DOCKER_REGISTRY)/$(IMAGE_NAME)-macos .
 
 windows:
-	GOOS=windows GOARCH=amd64 go build -o bin/myapp-windows.exe main.go
+	docker build --build-arg TARGETOS=windows --build-arg TARGETARCH=amd64 -t $(DOCKER_REGISTRY)/$(IMAGE_NAME)-windows .
 
 # Docker build target
-image:
-	docker build -t $(DOCKER_REGISTRY)/$(IMAGE_NAME) .
+image: linux arm macos windows
 
 # Docker run target
 docker-run:
-	docker run --rm -v $(PWD):/app $(DOCKER_REGISTRY)/$(IMAGE_NAME)
+	docker run --rm -v $(PWD):/app $(DOCKER_REGISTRY)/$(IMAGE_NAME)-linux
 
 # Clean up
 clean:
 	rm -rf bin/*
-	-@docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME) || true
+	-@docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME)-linux || true
+	-@docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME)-arm || true
+	-@docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME)-macos || true
+	-@docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME)-windows || true
 
 .PHONY: linux arm macos windows image docker-run clean
