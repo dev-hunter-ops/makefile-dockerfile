@@ -17,14 +17,10 @@ windows:
 
 # Docker build and run targets
 docker-build:
-	docker build -t $(IMAGE_NAME) .
+	docker build -t $(DOCKER_REGISTRY)/$(IMAGE_NAME) .
 
 docker-run:
-	docker run --rm -v $(PWD):/app $(IMAGE_NAME)
+	docker run --rm -v $(PWD):/app $(DOCKER_REGISTRY)/$(IMAGE_NAME)
 
 # Clean up
 clean:
-	rm -rf bin/*
-	docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME)
-
-.PHONY: linux arm macos windows docker-build docker-run clean
