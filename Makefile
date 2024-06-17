@@ -18,7 +18,7 @@ windows:
 # Docker build target
 image: linux arm macos windows
 
-# Docker run target
+# Docker run targets
 docker-run-linux:
 	docker run --rm -v $(PWD):/app $(DOCKER_REGISTRY)/$(IMAGE_NAME)-linux
 
@@ -37,6 +37,4 @@ clean:
 	-@docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME)-linux || true
 	-@docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME)-arm || true
 	-@docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME)-macos || true
-	-@docker rmi $(DOCKER_REGISTRY)/$(IMAGE_NAME)-windows || true
-
-.PHONY: linux arm macos windows image docker-run-linux docker-run-arm docker-run-macos docker-run-windows clean
+	-@docker rmi $(DOCKER_REGISTRY)/
