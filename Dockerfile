@@ -10,8 +10,7 @@ COPY . .
 # Build for the specified platform
 ARG TARGETOS
 ARG TARGETARCH
-RUN echo "Building for OS: $TARGETOS, ARCH: $TARGETARCH" && \
-    GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o /app/bin/myapp main.go
+RUN GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o /app/bin/myapp main.go
 
 # Create a smaller image with only the binary
 FROM alpine:3.15
